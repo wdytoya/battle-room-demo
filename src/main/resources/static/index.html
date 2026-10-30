@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>猜拳对撞房 · ELO Demo</title>
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1>猜拳对撞房</h1>
+      <p class="sub">服务端权威物理 · 客户端预测/插值/回滚 · 对撞用猜拳扣灯 · ELO 匹配</p>
+    </header>
+
+    <section class="panel" id="panel-login">
+      <h2>登录与按键</h2>
+      <div class="row login-row" id="login-row">
+        <label id="username-label">用户名
+          <input id="username" type="text" maxlength="32" placeholder="例如 alice" autocomplete="off" />
+        </label>
+        <button id="btn-login" type="button">登录</button>
+        <span id="logged-as" class="logged-as hidden"></span>
+        <span id="conn-status" class="muted"></span>
+      </div>
+      <div class="keys-row">
+        <div class="key-bind">
+          <span>向左</span>
+          <input id="key-left" type="text" maxlength="1" value="A" />
+        </div>
+        <div class="key-bind">
+          <span>向右</span>
+          <input id="key-right" type="text" maxlength="1" value="D" />
+        </div>
+        <div class="key-bind">
+          <span>布</span>
+          <input id="key-paper" type="text" maxlength="1" value="J" />
+        </div>
+        <div class="key-bind">
+          <span>剪刀</span>
+          <input id="key-scissors" type="text" maxlength="1" value="K" />
+        </div>
+        <div class="key-bind">
+          <span>石头</span>
+          <input id="key-rock" type="text" maxlength="1" value="L" />
+        </div>
+        <button id="btn-save-keys" type="button" class="btn-compact">应用</button>
+      </div>
+      <div id="keys-hint" class="keys-hint muted">当前：A=向左 D=向右 · J=布 K=剪刀 L=石头</div>
+    </section>
+
+    <section class="panel hidden" id="panel-profile">
+      <h2>个人与排行榜</h2>
+      <div class="profile-grid">
+        <div class="profile-col">
+          <button id="btn-refresh-me" type="button" disabled>刷新自己</button>
+          <div id="profile-view" class="profile compact">—</div>
+        </div>
+        <div class="profile-col">
+          <button id="btn-ranking" type="button" disabled>查看 TOP100</button>
+          <pre id="ranking-view" class="ranking compact">点击按钮加载</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="panel-match">
+      <h2>匹配</h2>
+      <div class="row">
+        <button id="btn-match-start" type="button" disabled>开始匹配</button>
+        <button id="btn-match-cancel" type="button" disabled>取消匹配</button>
+      </div>
+      <div id="match-view" class="match-status">空闲</div>
+    </section>
+
+    <section class="panel hidden" id="panel-battle">
+      <h2 id="battle-title">对战</h2>
+      <div id="battle-meta" class="battle-meta">—</div>
+      <div class="countdown" id="countdown">--</div>
+      <div id="battle-play" class="battle-play">
+        <div class="hud-lights">
+          <div class="lights-side">
+            <span id="lights-label-me" class="muted">自己</span>
+            <div id="lights-me" class="lights"></div>
+          </div>
+          <div class="lights-side right">
+            <span id="lights-label-opp" class="muted">对手</span>
+            <div id="lights-opp" class="lights"></div>
+          </div>
+        </div>
+        <canvas id="arena" width="800" height="220"></canvas>
+        <div id="collision-flash" class="collision-flash hidden"></div>
+        <div class="controls-bar">
+          <div class="controls-col">
+            <button type="button" id="btn-left" class="move-btn" disabled>向左</button>
+            <button type="button" id="btn-right" class="move-btn" disabled>向右</button>
+          </div>
+          <div class="controls-col">
+            <button type="button" class="hand-btn" data-hand="PAPER" disabled>布</button>
+            <button type="button" class="hand-btn" data-hand="SCISSORS" disabled>剪刀</button>
+            <button type="button" class="hand-btn" data-hand="ROCK" disabled>石头</button>
+          </div>
+        </div>
+        <p class="muted tip">左右为场地绝对方向；先点「开始匹配」的一方出生在左。手势在球内；对撞猜拳扣灯。</p>
+      </div>
+      <div id="battle-result" class="result hidden">—</div>
+      <div id="battle-result-actions" class="row result-actions hidden">
+        <button id="btn-close-result" type="button">关闭结果</button>
+        <span class="muted" id="result-auto-hint">也可等待自动关闭</span>
+      </div>
+    </section>
+
+    <section class="panel log-panel hidden" id="panel-log">
+      <h2>日志</h2>
+      <pre id="log" class="log"></pre>
+    </section>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>
