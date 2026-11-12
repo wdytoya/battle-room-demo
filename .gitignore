@@ -10,3 +10,6 @@ target/
 redis-data/
 .DS_Store
 Thumbs.db
+# Local-only tooling / notes (not published)
+scripts/
+docs/
